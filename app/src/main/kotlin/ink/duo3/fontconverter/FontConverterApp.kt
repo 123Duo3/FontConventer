@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,8 +44,10 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -53,6 +56,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -81,14 +85,14 @@ import ink.duo3.fontconverter.utils.getAppVersion
 fun FontConverterApp () {
     val context = LocalContext.current
     val easterEggToast = stringResource(id = R.string.toast_easter_egg)
-    var clickCount = remember { mutableStateOf(0) }
+    val clickCount = remember { mutableIntStateOf(0) }
     val openDialog = remember { mutableStateOf(false) }
     val onClick = {
-        if (clickCount.value < 7) {
-            clickCount.value += 1
+        if (clickCount.intValue < 7) {
+            clickCount.intValue += 1
         }
     }
-    val showEasterEgg = (clickCount.value >= 7)
+    val showEasterEgg = (clickCount.intValue >= 7)
     if (showEasterEgg) {
         Toast.makeText(
             context,
@@ -125,14 +129,14 @@ fun PortraitLayout(openDialog: MutableState<Boolean>, showEasterEgg: Boolean) {
         Modifier
             .fillMaxSize()
             .padding(
-                start = WindowInsets.systemBars
+                start = WindowInsets.displayCutout
                     .asPaddingValues()
                     .calculateStartPadding(LocalLayoutDirection.current),
                 top = WindowInsets.systemBars
                     .asPaddingValues()
                     .calculateTopPadding(),
                 bottom = 0.dp,
-                end = WindowInsets.systemBars
+                end = WindowInsets.displayCutout
                     .asPaddingValues()
                     .calculateEndPadding(LocalLayoutDirection.current)
             )
@@ -182,14 +186,14 @@ fun LandscapeLayout(openDialog: MutableState<Boolean>, showEasterEgg: Boolean) {
         Modifier
             .fillMaxSize()
             .padding(
-                start = WindowInsets.systemBars
+                start = WindowInsets.displayCutout
                     .asPaddingValues()
                     .calculateStartPadding(LocalLayoutDirection.current),
                 top = WindowInsets.systemBars
                     .asPaddingValues()
                     .calculateTopPadding(),
                 bottom = 0.dp,
-                end = WindowInsets.systemBars
+                end = WindowInsets.displayCutout
                     .asPaddingValues()
                     .calculateEndPadding(LocalLayoutDirection.current)
             )
@@ -250,11 +254,11 @@ fun ResultDisplay(input: String, showEasterEgg: Boolean) {
         TextStyle.values().forEachIndexed { index, style ->
             StyleItem(text = input, style = style)
             if (index != TextStyle.values().lastIndex) {
-                Divider()
+                HorizontalDivider()
             }
         }
         if (showEasterEgg) {
-            Divider()
+            HorizontalDivider()
             SomethingMystical(text = input)
         }
     }
@@ -266,7 +270,7 @@ fun AboutDialog (openDialog: MutableState<Boolean>, onClick: () -> Unit, showEas
     val context = LocalContext.current
     val versionName = getAppVersion(context)?.versionName
     if (openDialog.value) {
-        AlertDialog(
+        BasicAlertDialog(
             onDismissRequest = {
                 // Dismiss the dialog when the user clicks outside the dialog or on the back
                 // button. If you want to disable that functionality, simply use an empty

@@ -12,17 +12,17 @@ fun SomethingMystical(text: String) {
     var result = ""
     words.forEachIndexed { wordIndex, word ->
         word.forEachIndexed { letterIndex, c ->
-            if (word.first() in vowels) {
+            result += if (word.first() in vowels) {
                 if (letterIndex % 2 == 0) {
-                    result += c.uppercaseChar()
+                    c.uppercaseChar()
                 } else {
-                    result += c
+                    c
                 }
             } else {
                 if (letterIndex % 2 == 1) {
-                    result += c.uppercaseChar()
+                    c.uppercaseChar()
                 } else {
-                    result += c
+                    c
                 }
             }
         }
