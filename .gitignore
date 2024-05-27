@@ -34,3 +34,4 @@ google-services.json
 app/.DS_Store
 .DS_Store
 app/release/
+app/release/output-metadata.json
