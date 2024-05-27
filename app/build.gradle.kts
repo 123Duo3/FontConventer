@@ -1,18 +1,18 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
     namespace = "ink.duo3.fontconverter"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "ink.duo3.fontconverter"
         minSdk = 24
-        targetSdk = 33
-        versionCode = 3
-        versionName = "1.1.1"
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -40,7 +40,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
@@ -50,24 +50,21 @@ android {
 }
 
 dependencies {
-    val ui = "1.4.3"
 
-    implementation("androidx.window:window:1.0.0")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
-    implementation("com.google.accompanist:accompanist-adaptive:0.30.1")
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.1")
-    implementation(platform("androidx.compose:compose-bom:2023.05.00"))
-    implementation("androidx.compose.ui:ui:$ui")
-    implementation("androidx.compose.ui:ui-graphics:$ui")
-    implementation("androidx.compose.ui:ui-tooling-preview:$ui")
-    implementation("androidx.compose.material3:material3:1.2.0-alpha01")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.05.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$ui")
-    debugImplementation("androidx.compose.ui:ui-tooling:$ui")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$ui")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }
